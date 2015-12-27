@@ -15,10 +15,9 @@ export default React.createClass({
   generate() {
     let value = this.state.value.length ? this.state.value : '0'
     let generation = new Generation(parseInt(value))
-    console.log(generation)
     setTimeout(() => generation.downloadAnswers(), 500)
-    setTimeout(() => generation.downloadQuestions(), 1000)
-    setTimeout(() => this.setState({loading: false}), 1500)
+    setTimeout(() => generation.downloadQuestions(), 1500)
+    setTimeout(() => this.setState({loading: false}), 3000)
   },
 
   handleClick() {
@@ -27,6 +26,12 @@ export default React.createClass({
   },
 
   render() {
+    const canvasStyle = {
+      width: 600,
+      height: 600,
+      margin: '40px auto',
+      display: 'none'
+    }
     return (
       <div>
         <AppBar title='Task Generator' />
@@ -68,18 +73,8 @@ export default React.createClass({
             style={{width: '100%', marginTop: '15px'}}
             onClick={this.handleClick} />
         </Card>
-        <div id='jxgbox' className='jxgbox' style={this.canvas()}>
-        </div>
+        <div id='jxgbox' className='jxgbox' style={canvasStyle} />
       </div>
     )
-  },
-
-  canvas() {
-    return {
-      width: 600,
-      height: 600,
-      margin: '40px auto',
-      display: 'none'
-    }
   }
 })
