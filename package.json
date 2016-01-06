@@ -7,6 +7,7 @@
   ],
   "dependencies": {
     "events": "^1.1.0",
+    "linear-solve": "^1.0.0",
     "material-ui": "^0.14.0",
     "react": "^0.14.0",
     "react-addons-create-fragment": "^0.14.0",

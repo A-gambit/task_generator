@@ -1,5 +1,4 @@
-import {randomNotNull, randomWhole} from './random'
-import isNegative from './is_negative'
+import {randomNotNull, randomWhole, isNegative} from './random'
 
 export default () => {
   let isFirst = isNegative()

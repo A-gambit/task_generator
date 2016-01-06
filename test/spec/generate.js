@@ -23,6 +23,13 @@ describe('generate tests', () => {
     let data = generate()
     let system = new System(data)
     let res = system.solve()
+
+    //*********** LOG *************//
+    console.log(system.input)
+    console.log(system.solve())
+    console.log(system.values())
+    //*****************************//
+
     assert.isAbove(res.z, 0)
     done()
   })

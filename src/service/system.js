@@ -1,5 +1,6 @@
 import toString from '../tools/toString'
 import YASMIJ from  'yasmij'
+import Linear from 'linear-solve'
 
 class System {
   constructor({func, constraints}) {
@@ -7,34 +8,24 @@ class System {
     this.constraints = constraints
   }
 
-  notStraight() {
+  getNotStraight() {
     const isMax = this.func.type == 'max'
     const type = isMax ? '>=' : '<='
     let res = {
       func: {type: isMax ? 'min' : 'max', w: this.constraints.b},
       constraints: {b: [], a: [], type: []}
     }
-    let sConstraints = {
-      type: [], b: [],
-      a: this.constraints.type
-        .filter(item => item == '>=' || item == '<=')
-        .map(item => this.constraints.type.map(item => 0))
-    }
-    this.constraints.type.forEach((item, index) => {
+    this.func.z.forEach((item, index) => {
       res.constraints.type.push(type)
       res.constraints.b.push(this.func.z[index])
       res.constraints.a.push(this.constraints.a.map(a => a[index]))
-      if (item == '>=' || item == '<=') {
-        sConstraints.type.push(type)
-        sConstraints.a[index][index] = item == '>=' ? -1 : 1
-        sConstraints.b.push(0)
-      }
     })
-    for (let key in sConstraints)
-      res.constraints[key] = sConstraints[key].reduce((memo, item) => {
-        memo.push(item)
-        return memo
-      }, res.constraints[key])
+    this.constraints.type.forEach((item, i) => {
+      if (item == '=') return
+      res.constraints.type.push(type)
+      res.constraints.a.push(this.constraints.a.map((x, j) => j == i ? 1 : 0))
+      res.constraints.b.push(0)
+    })
     return res
   }
 
@@ -65,7 +56,7 @@ class System {
 
   getBasicResource() {
     let solve = this.solve()
-    let {constraints} = this.notStraight()
+    let {constraints} = this.getNotStraight()
     let resource = {b: [], a: [], type: []}
     solve.x.forEach((x, index) => {
       if (x <= 0) return
@@ -81,9 +72,8 @@ class System {
   }
 
   values() {
-    let resource = this.getBasicResource()
-    let values = []
-    return values
+    let {a, b} = this.getBasicResource()
+    return Linear.solve(a, b)
   }
 }
 

@@ -33,3 +33,11 @@ export const constAnswer = {
   z: 22/3,
   s: [0, 0]
 }
+
+export const constBasicResource = {
+  b: [2, 3],
+  a: [[2, 2], [1, 4]],
+  type: ['>=', '>=']
+}
+
+export const constValues = [1/3, 2/3]
