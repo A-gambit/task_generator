@@ -12,9 +12,10 @@
     "react-addons-create-fragment": "^0.14.0",
     "react-addons-pure-render-mixin": "^0.14.0",
     "react-addons-transition-group": "^0.14.0",
-    "react-tap-event-plugin": "^0.2.1",
     "react-addons-update": "^0.14.0",
-    "react-dom": "^0.14.0"
+    "react-dom": "^0.14.0",
+    "react-tap-event-plugin": "^0.2.1",
+    "yasmij": "^0.2.6"
   },
   "scripts": {
     "build": "./node_modules/.bin/gulp",
