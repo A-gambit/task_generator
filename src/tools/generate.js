@@ -7,14 +7,15 @@ export default () => {
   return {
     func: {
       z: [randomNotNull(), randomNotNull()],
-      type: 'max'
+      type: isNegative() ? 'min' : 'max'
     },
     constraints: {
       b: limitations,
       a: limitations.map((item, index) => {
+        let first = randomWhole(item)  * ((index == 0 && isFirst) || (index == 1 && isSecond) ? -1 : 1)
         return [
-          (index == 0 && isFirst) || (index == 1 && isSecond) ? -1 * randomWhole(item, 3) : randomWhole(item),
-          randomWhole(item)
+          first,
+          randomWhole(item, 10, first == 0)
         ]
       }),
       type: limitations.map(item => '<=')

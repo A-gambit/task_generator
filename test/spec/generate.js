@@ -2,6 +2,7 @@ import {assert} from 'chai'
 import generate from '../../src/tools/generate'
 import System from '../../src/service/system'
 
+
 describe('generate tests', () => {
   it('check generate', done => {
     const constraintsKeys = ['b', 'a', 'type']
@@ -25,9 +26,9 @@ describe('generate tests', () => {
     let res = system.solve()
 
     //*********** LOG *************//
-    console.log(system.input)
-    console.log(system.solve())
-    console.log(system.values())
+    // console.log(system.input)
+    // console.log(system.solve())
+    // console.log(system.values())
     //*****************************//
 
     assert.isAbove(res.z, 0)
