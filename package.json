@@ -6,7 +6,6 @@
     "Gregory Shehet"
   ],
   "dependencies": {
-    "events": "^1.1.0",
     "linear-solve": "^1.0.0",
     "material-ui": "^0.14.0",
     "react": "^0.14.0",
@@ -16,11 +15,11 @@
     "react-addons-update": "^0.14.0",
     "react-dom": "^0.14.0",
     "react-tap-event-plugin": "^0.2.1",
-    "yasmij": "^0.2.6"
+    "yasmij": "git+ssh://git@github.com:A-gambit/YASMIJ.js.git"
   },
   "scripts": {
     "build": "./node_modules/.bin/gulp",
-    "start": "python -m SimpleHTTPServer 4444",
+    "start": "python -m SimpleHTTPServer 5555",
     "test": "./node_modules/.bin/mocha --compilers js:babel/register ./test"
   },
   "devDependencies": {
