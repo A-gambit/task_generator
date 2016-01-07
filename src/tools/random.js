@@ -4,7 +4,7 @@ export let randomWhole = (item, max = 10, notNull) => {
   let i = null
   do {
     i = notNull ? randomNotNull(max) : random(max)
-  } while (i != 0 && item % i != 0)
+  } while (i != 0 && item % i != 0 && Number.isInteger(i))
   return i
 }
 
