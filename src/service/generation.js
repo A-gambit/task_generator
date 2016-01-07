@@ -10,13 +10,14 @@ class Generation {
     while (true) {
       let system = new System(generate())
       try {
-        let {z: result} = system.solve()
+        let {z: result, x: point} = system.solve()
         let values = system.values()
         let isReturn = (
           result != 0 &&
           values.length == system.constraints.a.length &&
           Number.isInteger(result) &&
-          values.every(x => Number.isInteger(x))
+          values.every(x => Number.isInteger(x) && x >= 0) &&
+          point.every(x => Number.isInteger(x))
         )
         if (isReturn) return system
       }
