@@ -9,11 +9,12 @@ import Generation from '../service/generation'
 
 export default React.createClass({
   getInitialState() {
-    return {value: 1, loading: false}
+    return {value: '', loading: false}
   },
 
   generate() {
-    let generation = new Generation(parseInt(this.state.value))
+    let value = this.state.value.length ? this.state.value : '0'
+    let generation = new Generation(parseInt(value))
     console.log(generation)
     setTimeout(() => generation.downloadAnswers(), 500)
     setTimeout(() => generation.downloadQuestions(), 1000)
@@ -32,7 +33,7 @@ export default React.createClass({
         <Card initiallyExpanded style={{
           padding: '30px 40px 30px 40px',
           width: 600,
-          margin: '80px auto 0'
+          margin: '80px auto 5px'
         }}>
           {
             this.state.loading &&
@@ -67,9 +68,18 @@ export default React.createClass({
             style={{width: '100%', marginTop: '15px'}}
             onClick={this.handleClick} />
         </Card>
-        <div id='jxgbox' className='jxgbox' style={{width: 600, height: 600, margin: '40px auto'}}>
+        <div id='jxgbox' className='jxgbox' style={this.canvas()}>
         </div>
       </div>
     )
+  },
+
+  canvas() {
+    return {
+      width: 600,
+      height: 600,
+      margin: '40px auto',
+      display: 'none'
+    }
   }
 })
