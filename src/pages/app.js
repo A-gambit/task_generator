@@ -9,12 +9,12 @@ import Generation from '../service/generation'
 
 export default React.createClass({
   getInitialState() {
-    return {value: 1, loading: false}
+    return {value: '', loading: false}
   },
 
   generate() {
-    let generation = new Generation(this.state.value)
-    //setTimeout(() => generation.downloadAnswers(), 500)
+    let generation = new Generation(parseInt(this.state.value))
+    setTimeout(() => generation.downloadAnswers(), 500)
     setTimeout(() => generation.downloadQuestions(), 1000)
     setTimeout(() => this.setState({loading: false}), 1500)
   },
@@ -66,8 +66,8 @@ export default React.createClass({
             style={{width: '100%', marginTop: '15px'}}
             onClick={this.handleClick} />
         </Card>
-        <img id='img' />
-        <div id='plot' style={{width: 550, margin: '30px auto 20px'}}></div>
+        <div id='jxgbox' clasNames='jxgbox' style={{width: 600, height: 600, margin: '20px auto', display: 'none'}}>
+        </div>
       </div>
     )
   }

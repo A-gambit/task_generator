@@ -1,6 +1,7 @@
 import System from './system'
 import generate from '../tools/generate'
 import {random} from '../tools/random'
+import draw from '../tools/draw'
 
 const testKey = ['a', 'b', 'c', 'd']
 
@@ -21,6 +22,9 @@ const styles = {
   },
   table: {
     margin: [0, 5, 0, 15]
+  },
+  graph: {
+    margin: [20, 20, 20, 20]
   },
   tab: {
     alignment: 'justify',
@@ -97,12 +101,10 @@ class Generation {
     })
   }
 
-  draw(system, cb) {
-    let Draw = require('./draw')
-    let draw = new Draw(system)
-    draw.draw()
-    let svg = document.getElementById('plot').children[0]
-    return `data:image/svg+xml;base64,${window.btoa(svg.outerHTML)}`
+  draw(system) {
+    draw(system)
+    let canvas = document.getElementById('jxgbox').children[0]
+    return canvas.toDataURL()
   }
 
   downloadQuestions() {
@@ -113,12 +115,13 @@ class Generation {
       let image = draw(system)
       content.push({text: `Варіант №${i + 1}`, style: 'header'})
       content.push({text: `${system.func.type} z = ${input.objective}`, style: 'system'})
-      //content.push({image})
       input.constraints.forEach(item => content.push({text: item, style: 'system'}))
+      content.push({image, style: 'graph', fit: [300, 300]})
       this.tests[i].forEach((item, index) => {
         content.push({text: `${index + 1}) ${item.question}`, style: 'subheader'})
         if (item.test) item.test.forEach((test, j) => content.push({text: `${testKey[j]}) ${test}`}))
       })
+      content.push({text: '', pageBreak: 'after'})
     })
     pdfMake.createPdf({content, styles}).download('questions.pdf')
   }
