@@ -1,6 +1,6 @@
 import {assert} from 'chai'
 import System from '../../src/service/system'
-import {constSystem, constSlr, constInput, constAnswer, constBasicResource, constValues} from '../data/fisrt'
+import {constSystem, constSlr, constInput, constAnswer, constBasicResource, constValues} from '../data/first'
 import {constSecondSystem, constSecondAnswer, constSecondSlr, constBasicSecondResource, constSecondValues} from '../data/second'
 
 let system = null

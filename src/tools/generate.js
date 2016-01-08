@@ -1,18 +1,16 @@
-import {randomNotNull, randomWhole, isNegative} from './random'
+import {randomMore, randomWhole, isNegative} from './random'
 
 export default () => {
-  let isFirst = isNegative()
-  let isSecond = !isFirst && isNegative()
-  let limitations = [randomNotNull(), randomNotNull(), randomNotNull()]
+  let limitations = [randomMore(2), randomMore(2), randomMore(0, 3)]
   return {
     func: {
-      z: [randomNotNull(4), randomNotNull(4)],
+      z: [randomMore(0, 4), randomMore(0, 4)],
       type: isNegative() ? 'min' : 'max'
     },
     constraints: {
       b: limitations,
       a: limitations.map((item, index) => {
-        let first = randomWhole(item)  * ((index == 0 && isFirst) || (index == 1 && isSecond) ? -1 : 1)
+        let first = randomWhole(item) * (index == 2 ? -1 : 1)
         return [first, randomWhole(item, 10, first == 0)]
       }),
       type: limitations.map(item => '<=')

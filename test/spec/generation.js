@@ -4,7 +4,7 @@ import Generation from '../../src/service/generation'
 describe('generation tests', () => {
   it('check generation', function(done) {
     this.timeout(30000)
-    let generation = new Generation(10)
+    let generation = new Generation(5)
     generation.systems.forEach(({system, point, result, values}, index) => {
       let tests = generation.tests[index]
       assert.deepEqual(tests[0].correct, result)

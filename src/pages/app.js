@@ -9,16 +9,19 @@ import Generation from '../service/generation'
 
 export default React.createClass({
   getInitialState() {
-    return {value: 30, loading: false}
+    return {value: 1, loading: false}
+  },
+
+  generate() {
+    let generation = new Generation(this.state.value)
+    //setTimeout(() => generation.downloadAnswers(), 500)
+    setTimeout(() => generation.downloadQuestions(), 1000)
+    setTimeout(() => this.setState({loading: false}), 1500)
   },
 
   handleClick() {
     this.setState({loading: true})
-    setTimeout(() => {
-      let generation = new Generation(this.props.value)
-      console.log(generation)
-      this.setState({loading: false})
-    }, 1000)
+    setTimeout(() => this.generate(), 1000)
   },
 
   render() {
@@ -63,6 +66,8 @@ export default React.createClass({
             style={{width: '100%', marginTop: '15px'}}
             onClick={this.handleClick} />
         </Card>
+        <img id='img' />
+        <div id='plot' style={{width: 550, margin: '30px auto 20px'}}></div>
       </div>
     )
   }

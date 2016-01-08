@@ -6,6 +6,7 @@
     "Gregory Shehet"
   ],
   "dependencies": {
+    "function-plot": "^1.16.2",
     "linear-solve": "^1.0.0",
     "material-ui": "^0.14.0",
     "react": "^0.14.0",
