@@ -103,7 +103,7 @@ class Generation {
 
   draw(system) {
     draw(system)
-    let canvas = document.getElementById('jxgbox').children[0]
+    let canvas = document.querySelector('#jxgbox > canvas')
     return canvas.toDataURL()
   }
 
@@ -123,7 +123,7 @@ class Generation {
       })
       content.push({text: '', pageBreak: 'after'})
     })
-    pdfMake.createPdf({content, styles}).download('questions.pdf')
+    //pdfMake.createPdf({content, styles}).download('questions.pdf')
   }
 
   downloadAnswers() {
@@ -138,7 +138,7 @@ class Generation {
     content[1].table.body.unshift(this.tests[0].map((item, index) => {
       return {text: (index + 1).toString(), style: 'tableHeader'}
     }))
-    pdfMake.createPdf({content, styles}).download('answers.pdf')
+    //pdfMake.createPdf({content, styles}).download('answers.pdf')
   }
 }
 
