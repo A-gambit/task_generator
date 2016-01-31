@@ -19725,16 +19725,15 @@
 	
 	    var value = this.state.value.length ? this.state.value : '0';
 	    var generation = new _serviceGeneration2['default'](parseInt(value));
-	    console.log(generation);
 	    setTimeout(function () {
 	      return generation.downloadAnswers();
 	    }, 500);
 	    setTimeout(function () {
 	      return generation.downloadQuestions();
-	    }, 1000);
+	    }, 1500);
 	    setTimeout(function () {
 	      return _this.setState({ loading: false });
-	    }, 1500);
+	    }, 3000);
 	  },
 	
 	  handleClick: function handleClick() {
@@ -19749,6 +19748,12 @@
 	  render: function render() {
 	    var _this3 = this;
 	
+	    var canvasStyle = {
+	      width: 600,
+	      height: 600,
+	      margin: '40px auto',
+	      display: 'none'
+	    };
 	    return _react2['default'].createElement(
 	      'div',
 	      null,
@@ -19792,17 +19797,8 @@
 	          style: { width: '100%', marginTop: '15px' },
 	          onClick: this.handleClick })
 	      ),
-	      _react2['default'].createElement('div', { id: 'jxgbox', className: 'jxgbox', style: this.canvas() })
+	      _react2['default'].createElement('div', { id: 'jxgbox', className: 'jxgbox', style: canvasStyle })
 	    );
-	  },
-	
-	  canvas: function canvas() {
-	    return {
-	      width: 600,
-	      height: 600,
-	      margin: '40px auto',
-	      display: 'none'
-	    };
 	  }
 	});
 	module.exports = exports['default'];
@@ -33754,6 +33750,7 @@
 	};
 	
 	exports['default'] = function (system) {
+	  var labelSize = { label: { fontSize: 18 } };
 	  var constraints = system.constraints;
 	  var func = system.func;
 	
@@ -33772,12 +33769,12 @@
 	  board.create('axis', [[0, 0], [1, 0]], {
 	    name: 'x1',
 	    withLabel: true,
-	    label: { offset: [283, 15], fontSize: 16 }
+	    label: { offset: [283, 15], fontSize: labelSize.label.fontSize }
 	  });
 	  board.create('axis', [[0, 0], [0, 1]], {
 	    name: 'x2',
 	    withLabel: true,
-	    label: { offset: [15, 290], fontSize: 16 }
+	    label: { offset: [15, 290], fontSize: labelSize.label.fontSize }
 	  });
 	  constraints.b.forEach(function (b, index) {
 	    var line = board.create('functiongraph', [function (x) {
@@ -33786,25 +33783,24 @@
 	    }, 0, 9], {
 	      name: input.constraints[index],
 	      withLabel: false,
-	      label: { position: 'top', offset: [5, 5] },
 	      strokeWidth: 2
 	    });
 	    graph.push(line);
 	  });
 	  var p1 = board.create('point', [0, 0], { visible: false, name: (++name).toString() });
 	  var p2 = board.create('point', func.z, { visible: false, name: (++name).toString() });
-	  board.create('arrow', [p1, p2], { color: 'red', strokeWidth: 2 });
+	  board.create('arrow', [p1, p2], { color: 'red', strokeWidth: 3 });
 	  graph.forEach(function (l1, i) {
 	    graph.forEach(function (l2, j) {
 	      if (i >= j) return;
-	      var point = board.create('intersection', [l1, l2, 0], { label: { fontSize: 16 } });
+	      var point = board.create('intersection', [l1, l2, 0], labelSize);
 	      checkPoint(point);
 	    });
 	  });
 	  constraints.b.forEach(function (b, index) {
-	    var point = board.create('point', [0, b / constraints.a[index][1]], { label: { fontSize: 16 } });
+	    var point = board.create('point', [0, b / constraints.a[index][1]], labelSize);
 	    checkPoint(point);
-	    point = board.create('point', [b / constraints.a[index][0], 0], { label: { fontSize: 16 } });
+	    point = board.create('point', [b / constraints.a[index][0], 0], labelSize);
 	    checkPoint(point);
 	  });
 	  board.clickUpArrow();
@@ -33815,7 +33811,7 @@
 	    var isCord = checkCord(x, y, cords);
 	    if (!isCord) cords.push([x, y]);
 	    if (isCord || isNaN(y) || isNaN(x) || y > 7.9 || y < 0 || x > 7.9 || x < 0) {
-	      point.setAttribute({ visible: false, name: (++name).toString(), label: { fontSize: 16 } });
+	      point.setAttribute({ visible: false, name: (++name).toString(), label: labelSize.label });
 	    }
 	  }
 	};
