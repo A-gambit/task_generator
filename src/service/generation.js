@@ -115,13 +115,19 @@ class Generation {
       let image = draw(system)
       content.push({text: `Варіант №${i + 1}`, style: 'header'})
       content.push({text: `${system.func.type} z = ${input.objective}`, style: 'system'})
-      input.constraints.forEach(item => content.push({text: item, style: 'system'}))
+      input.constraints.forEach((item, index) => content.push({text: `${index + 1}) ${item}`, style: 'system'}))
       content.push({image, style: 'graph', fit: [300, 300]})
-      this.tests[i].forEach((item, index) => {
-        content.push({text: `${index + 1}) ${item.question}`, style: 'subheader'})
-        if (item.test) item.test.forEach((test, j) => content.push({text: `${testKey[j]}) ${test}`}))
-      })
-      content.push({text: '', pageBreak: 'after'})
+      if (Array.isArray(this.tests[i])) {
+        this.tests[i].forEach((item, index) => {
+          content.push({text: `${index + 1}) ${item.question}`, style: 'subheader'})
+          if (Array.isArray(item.test)) {
+            item.test.forEach((test, j) => content.push({text: `${testKey[j]}) ${test}`}))
+          }
+        })
+      }
+      if(i != this.systems.length - 1) {
+        content.push({text: '', pageBreak: 'after'})
+      }
     })
     pdfMake.createPdf({content, styles}).download('questions.pdf')
   }
@@ -129,15 +135,22 @@ class Generation {
   downloadAnswers() {
     let content = [
       {text: 'Відповіді', style: 'header'},
-      {style: 'table', table: {body: this.tests.map(test =>
-        test.map(({correct, correctKey}) => {
-          if (Array.isArray(correct)) return {text: correct.join(' '), style: 'tab'}
-          return {text: correctKey || correct.toString(), style: 'tab'}
-        }))}}
+      {style: 'table', table: {body: this.tests.map((test, index) =>
+        [
+          {text: (index + 1).toString(), style: 'tableHeader'},
+          ...test.map(({correct, correctKey}) => {
+            if (Array.isArray(correct)) return {text: correct.join(' '), style: 'tab'}
+            return {text: correctKey || correct.toString(), style: 'tab'}
+          })
+        ]
+      )}}
     ]
-    content[1].table.body.unshift(this.tests[0].map((item, index) => {
-      return {text: (index + 1).toString(), style: 'tableHeader'}
-    }))
+    content[1].table.body.unshift([
+      {text: '№', style: 'tableHeader'},
+      ...this.tests[0].map((item, index) => {
+        return {text: (index + 1).toString(), style: 'tableHeader'}
+      })
+    ])
     pdfMake.createPdf({content, styles}).download('answers.pdf')
   }
 }
