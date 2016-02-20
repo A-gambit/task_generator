@@ -15,12 +15,13 @@
     "react-addons-transition-group": "^0.14.0",
     "react-addons-update": "^0.14.0",
     "react-dom": "^0.14.0",
+    "react-router": "^2.0.0",
     "react-tap-event-plugin": "^0.2.1",
     "yasmij": "git+ssh://git@github.com:A-gambit/YASMIJ.js.git"
   },
   "scripts": {
     "build": "./node_modules/.bin/gulp",
-    "start": "python -m SimpleHTTPServer 3333",
+    "start": "python -m SimpleHTTPServer 4444",
     "test": "./node_modules/.bin/mocha --compilers js:babel/register ./test"
   },
   "devDependencies": {

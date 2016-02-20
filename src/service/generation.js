@@ -40,7 +40,7 @@ const styles = {
 class Generation {
   constructor(number) {
     this.systems = this.generateSystems(number)
-    this.tests = this.generationTest()
+    this.tests = this.systems.map(system => this.generationTest(system))
   }
 
   generateOne() {
@@ -70,35 +70,33 @@ class Generation {
     return systems
   }
 
-  generationTest() {
-    return this.systems.map(({system, point, result, values}) => {
-      let questions = values.map((y, index) => {
-        const correct = random(4)
-        let question =  {
-          question: `Яка цінність ресурсу ${index + 1}?`,
-          test: [],
-          correct,
-          correctKey: testKey[correct]
-        }
-        for (let i = 0; i < 4; ++i)
-          question.test.push(y + question.correct - i)
-        return question
-      })
-      questions.unshift({
-        question: 'Вкажіть точку оптимуму?',
-        correct: point
-      })
-      questions.unshift({
-        question: 'Вкажіть оптимальне значення цільвої функції?',
-        correct: result
-      })
-      questions.pop()
-      questions.push({
-        question: `Яка цінність ресурсу ${values.length}?`,
-        correct: values[values.length - 1]
-      })
-      return questions
+  generationTest({system, point, result, values}) {
+    let questions = values.map((y, index) => {
+      const correct = random(4)
+      let question =  {
+        question: `Яка цінність ресурсу ${index + 1}?`,
+        test: [],
+        correct,
+        correctKey: testKey[correct]
+      }
+      for (let i = 0; i < 4; ++i)
+        question.test.push(y + question.correct - i)
+      return question
     })
+    questions.unshift({
+      question: 'Вкажіть точку оптимуму?',
+      correct: point
+    })
+    questions.unshift({
+      question: 'Вкажіть оптимальне значення цільвої функції?',
+      correct: result
+    })
+    questions.pop()
+    questions.push({
+      question: `Яка цінність ресурсу ${values.length}?`,
+      correct: values[values.length - 1]
+    })
+    return questions
   }
 
   draw(system) {
