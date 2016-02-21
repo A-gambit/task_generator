@@ -7,7 +7,10 @@ import CardTitle from 'material-ui/lib/card/card-title'
 import RaisedButton from 'material-ui/lib/raised-button'
 import TextField from 'material-ui/lib/TextField/TextField'
 import RadioButton from 'material-ui/lib/radio-button'
+import Colors from 'material-ui/lib/styles/colors'
 import RadioButtonGroup from 'material-ui/lib/radio-button-group'
+import DoneIcon from 'material-ui/lib/svg-icons/action/check-circle'
+import ErrorIcon from 'material-ui/lib/svg-icons/action/highlight-off'
 import Test from '../../service/test'
 
 const testKey = ['a', 'b', 'c', 'd']
@@ -21,6 +24,7 @@ export default React.createClass({
     return {
       task: new Test(),
       answers: ['', '', null, null, ''],
+      correct: [false, false, false, false, false],
       mark: null
     }
   },
@@ -39,18 +43,33 @@ export default React.createClass({
   },
 
   handleClick() {
-    const mark = this.state.answers.reduce((memo, answer, index) => {
+    const {mark, correct} = this.state.answers.reduce((memo, answer, index) => {
       let correctAnswer = Array.isArray(this.state.task.tests[index].correct)
         ? this.state.task.tests[index].correct.join(' ')
         : this.state.task.tests[index].correctKey || this.state.task.tests[index].correct.toString()
-      memo += correctAnswer == answer ? 1 : 0
+      let check = correctAnswer == answer
+      memo.correct.push(check)
+      memo.mark += check ? 1 : 0
       return memo
-    }, 0)
-    this.setState({mark})
+    }, {correct: [], mark: 0})
+    this.setState({mark, correct})
   },
 
   componentDidMount() {
     this.state.task.draw()
+  },
+
+  showIcon(index) {
+    const style = {
+      top: 5,
+      position: 'relative',
+      marginLeft: 3
+    }
+    return (
+      this.state.correct[index]
+      ? <DoneIcon style={style} color={Colors.green500} />
+      : <ErrorIcon style={style} color={Colors.red500} />
+    )
   },
 
   render() {
@@ -93,6 +112,7 @@ export default React.createClass({
               <div key={index}>
                 <CardText key={index} style={!Array.isArray(test) ? {marginBottom: -10} : {}}>
                   {index + 1}) {question} {Array.isArray(correct) && '(Координати ввести через пробіл)'}
+                  {Number.isInteger(this.state.mark) && this.showIcon(index)}
                 </CardText>
                 {
                   Array.isArray(test) && (

@@ -46393,11 +46393,23 @@
 	
 	var _materialUiLibRadioButton2 = _interopRequireDefault(_materialUiLibRadioButton);
 	
+	var _materialUiLibStylesColors = __webpack_require__(243);
+	
+	var _materialUiLibStylesColors2 = _interopRequireDefault(_materialUiLibStylesColors);
+	
 	var _materialUiLibRadioButtonGroup = __webpack_require__(431);
 	
 	var _materialUiLibRadioButtonGroup2 = _interopRequireDefault(_materialUiLibRadioButtonGroup);
 	
-	var _serviceTest = __webpack_require__(432);
+	var _materialUiLibSvgIconsActionCheckCircle = __webpack_require__(432);
+	
+	var _materialUiLibSvgIconsActionCheckCircle2 = _interopRequireDefault(_materialUiLibSvgIconsActionCheckCircle);
+	
+	var _materialUiLibSvgIconsActionHighlightOff = __webpack_require__(433);
+	
+	var _materialUiLibSvgIconsActionHighlightOff2 = _interopRequireDefault(_materialUiLibSvgIconsActionHighlightOff);
+	
+	var _serviceTest = __webpack_require__(434);
 	
 	var _serviceTest2 = _interopRequireDefault(_serviceTest);
 	
@@ -46414,6 +46426,7 @@
 	    return {
 	      task: new _serviceTest2['default'](),
 	      answers: ['', '', null, null, ''],
+	      correct: [false, false, false, false, false],
 	      mark: null
 	    };
 	  },
@@ -46436,16 +46449,31 @@
 	  handleClick: function handleClick() {
 	    var _this = this;
 	
-	    var mark = this.state.answers.reduce(function (memo, answer, index) {
+	    var _state$answers$reduce = this.state.answers.reduce(function (memo, answer, index) {
 	      var correctAnswer = Array.isArray(_this.state.task.tests[index].correct) ? _this.state.task.tests[index].correct.join(' ') : _this.state.task.tests[index].correctKey || _this.state.task.tests[index].correct.toString();
-	      memo += correctAnswer == answer ? 1 : 0;
+	      var check = correctAnswer == answer;
+	      memo.correct.push(check);
+	      memo.mark += check ? 1 : 0;
 	      return memo;
-	    }, 0);
-	    this.setState({ mark: mark });
+	    }, { correct: [], mark: 0 });
+	
+	    var mark = _state$answers$reduce.mark;
+	    var correct = _state$answers$reduce.correct;
+	
+	    this.setState({ mark: mark, correct: correct });
 	  },
 	
 	  componentDidMount: function componentDidMount() {
 	    this.state.task.draw();
+	  },
+	
+	  showIcon: function showIcon(index) {
+	    var style = {
+	      top: 5,
+	      position: 'relative',
+	      marginLeft: 3
+	    };
+	    return this.state.correct[index] ? _react2['default'].createElement(_materialUiLibSvgIconsActionCheckCircle2['default'], { style: style, color: _materialUiLibStylesColors2['default'].green500 }) : _react2['default'].createElement(_materialUiLibSvgIconsActionHighlightOff2['default'], { style: style, color: _materialUiLibStylesColors2['default'].red500 });
 	  },
 	
 	  render: function render() {
@@ -46520,7 +46548,8 @@
 	              ') ',
 	              question,
 	              ' ',
-	              Array.isArray(correct) && '(Координати ввести через пробіл)'
+	              Array.isArray(correct) && '(Координати ввести через пробіл)',
+	              _Number$isInteger(_this2.state.mark) && _this2.showIcon(index)
 	            ),
 	            Array.isArray(test) && _react2['default'].createElement(
 	              _materialUiLibRadioButtonGroup2['default'],
@@ -47291,13 +47320,97 @@
 /* 432 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactAddonsPureRenderMixin = __webpack_require__(250);
+	
+	var _reactAddonsPureRenderMixin2 = _interopRequireDefault(_reactAddonsPureRenderMixin);
+	
+	var _svgIcon = __webpack_require__(295);
+	
+	var _svgIcon2 = _interopRequireDefault(_svgIcon);
+	
+	var ActionCheckCircle = _react2['default'].createClass({
+	  displayName: 'ActionCheckCircle',
+	
+	  mixins: [_reactAddonsPureRenderMixin2['default']],
+	
+	  render: function render() {
+	    return _react2['default'].createElement(
+	      _svgIcon2['default'],
+	      this.props,
+	      _react2['default'].createElement('path', { d: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z' })
+	    );
+	  }
+	
+	});
+	
+	exports['default'] = ActionCheckCircle;
+	module.exports = exports['default'];
+
+/***/ },
+/* 433 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactAddonsPureRenderMixin = __webpack_require__(250);
+	
+	var _reactAddonsPureRenderMixin2 = _interopRequireDefault(_reactAddonsPureRenderMixin);
+	
+	var _svgIcon = __webpack_require__(295);
+	
+	var _svgIcon2 = _interopRequireDefault(_svgIcon);
+	
+	var ActionHighlightOff = _react2['default'].createClass({
+	  displayName: 'ActionHighlightOff',
+	
+	  mixins: [_reactAddonsPureRenderMixin2['default']],
+	
+	  render: function render() {
+	    return _react2['default'].createElement(
+	      _svgIcon2['default'],
+	      this.props,
+	      _react2['default'].createElement('path', { d: 'M14.59 8L12 10.59 9.41 8 8 9.41 10.59 12 8 14.59 9.41 16 12 13.41 14.59 16 16 14.59 13.41 12 16 9.41 14.59 8zM12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z' })
+	    );
+	  }
+	
+	});
+	
+	exports['default'] = ActionHighlightOff;
+	module.exports = exports['default'];
+
+/***/ },
+/* 434 */
+/***/ function(module, exports, __webpack_require__) {
+
 	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/Gregory/work/task_generator/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/Gregory/work/task_generator/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
 	
 	'use strict';
 	
-	var _get = __webpack_require__(433)['default'];
+	var _get = __webpack_require__(435)['default'];
 	
-	var _inherits = __webpack_require__(438)['default'];
+	var _inherits = __webpack_require__(440)['default'];
 	
 	var _createClass = __webpack_require__(351)['default'];
 	
@@ -47340,12 +47453,12 @@
 	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/Gregory/work/task_generator/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "test.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ },
-/* 433 */
+/* 435 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
-	var _Object$getOwnPropertyDescriptor = __webpack_require__(434)["default"];
+	var _Object$getOwnPropertyDescriptor = __webpack_require__(436)["default"];
 	
 	exports["default"] = function get(_x, _x2, _x3) {
 	  var _again = true;
@@ -47389,36 +47502,36 @@
 	exports.__esModule = true;
 
 /***/ },
-/* 434 */
+/* 436 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = { "default": __webpack_require__(435), __esModule: true };
+	module.exports = { "default": __webpack_require__(437), __esModule: true };
 
 /***/ },
-/* 435 */
+/* 437 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var $ = __webpack_require__(354);
-	__webpack_require__(436);
+	__webpack_require__(438);
 	module.exports = function getOwnPropertyDescriptor(it, key){
 	  return $.getDesc(it, key);
 	};
 
 /***/ },
-/* 436 */
+/* 438 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 19.1.2.6 Object.getOwnPropertyDescriptor(O, P)
 	var toIObject = __webpack_require__(419);
 	
-	__webpack_require__(437)('getOwnPropertyDescriptor', function($getOwnPropertyDescriptor){
+	__webpack_require__(439)('getOwnPropertyDescriptor', function($getOwnPropertyDescriptor){
 	  return function getOwnPropertyDescriptor(it, key){
 	    return $getOwnPropertyDescriptor(toIObject(it), key);
 	  };
 	});
 
 /***/ },
-/* 437 */
+/* 439 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// most Object methods by ES6 should accept primitives
@@ -47433,14 +47546,14 @@
 	};
 
 /***/ },
-/* 438 */
+/* 440 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
-	var _Object$create = __webpack_require__(439)["default"];
+	var _Object$create = __webpack_require__(441)["default"];
 	
-	var _Object$setPrototypeOf = __webpack_require__(441)["default"];
+	var _Object$setPrototypeOf = __webpack_require__(443)["default"];
 	
 	exports["default"] = function (subClass, superClass) {
 	  if (typeof superClass !== "function" && superClass !== null) {
@@ -47461,21 +47574,6 @@
 	exports.__esModule = true;
 
 /***/ },
-/* 439 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = { "default": __webpack_require__(440), __esModule: true };
-
-/***/ },
-/* 440 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var $ = __webpack_require__(354);
-	module.exports = function create(P, D){
-	  return $.create(P, D);
-	};
-
-/***/ },
 /* 441 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -47485,19 +47583,34 @@
 /* 442 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(443);
-	module.exports = __webpack_require__(367).Object.setPrototypeOf;
+	var $ = __webpack_require__(354);
+	module.exports = function create(P, D){
+	  return $.create(P, D);
+	};
 
 /***/ },
 /* 443 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// 19.1.3.19 Object.setPrototypeOf(O, proto)
-	var $export = __webpack_require__(365);
-	$export($export.S, 'Object', {setPrototypeOf: __webpack_require__(444).set});
+	module.exports = { "default": __webpack_require__(444), __esModule: true };
 
 /***/ },
 /* 444 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(445);
+	module.exports = __webpack_require__(367).Object.setPrototypeOf;
+
+/***/ },
+/* 445 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// 19.1.3.19 Object.setPrototypeOf(O, proto)
+	var $export = __webpack_require__(365);
+	$export($export.S, 'Object', {setPrototypeOf: __webpack_require__(446).set});
+
+/***/ },
+/* 446 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Works with __proto__ only. Old v8 can't work with null proto objects.
