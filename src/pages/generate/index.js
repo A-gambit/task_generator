@@ -58,7 +58,7 @@ export default React.createClass({
             style={{padding: 0, height: 50}} />
           <TextField
             hintText='Вкажіть кількість варіантів'
-            floatingLabelText='кількість варіантів'
+            floatingLabelText='Kількість варіантів'
             inputStyle={{marginLeft: 5}}
             hintStyle={{marginLeft: 5}}
             floatingLabelStyle={{marginLeft: 5}}

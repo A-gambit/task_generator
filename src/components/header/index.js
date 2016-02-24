@@ -21,7 +21,7 @@ export default React.createClass({
   },
 
   navigate(path = '') {
-    document.location = `/#/${path}`
+    document.location = document.location.pathname + `#/${path}`
     this.handleClose()
   },
 
