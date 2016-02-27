@@ -74,10 +74,10 @@ export default React.createClass({
 
   render() {
     const canvasStyle = {
-      width: 600,
-      height: 600,
+      width: 550,
+      height: 550,
       border: 'none',
-      margin: '40px auto'
+      margin: '50px 0'
     }
     let {system} = this.state.task.system
     let input = system.input
@@ -85,34 +85,60 @@ export default React.createClass({
       <div>
         <Card initiallyExpanded style={{
           padding: '30px 40px 30px 40px',
-          width: 800,
+          width: 1150,
           margin: '80px auto'
         }}>
-          <div style={{float: 'right', zIndex: 100, position: 'relative'}}>
+          <div style={{
+            float: 'right',
+            zIndex: 100,
+            position: 'relative',
+            width: 550
+          }}>
             <CardTitle
-              title={Number.isInteger(this.state.mark) && <span>Оцінка {this.state.mark}</span>}
+              title={(
+                <span style={{
+                  opacity: Number.isInteger(this.state.mark) ? 1 : 0,
+                  marginLeft: 32
+                }}>
+                  Оцінка {this.state.mark}
+                </span>
+              )}
               style={{paddingLeft: 0}} />
             <RaisedButton
               label='Змінити умову'
               secondary={true}
-              onClick={this.newTest} />
+              onClick={this.newTest}
+              style={{marginLeft: 32}} />
+            <div id='jxgbox' className='jxgbox' style={canvasStyle} />
           </div>
           <CardHeader
             title='Тест'
             titleStyle={{fontSize: '30px'}}
-            style={{padding: 0, height: 50}} />
-          <CardText style={{fontSize: 16}}>z = {input.objective}</CardText>
+            style={{padding: 0, height: 50, marginLeft: 17}} />
+          <CardText style={{fontSize: 16}}>z {system.func.type} = {input.objective}</CardText>
           {
             input.constraints.map((item, index) =>
-              <CardText key={index} style={{paddingBottom: 10, paddingTop: 10, fontSize: 16}}>{index + 1}) {item}</CardText>)
+              <CardText
+                key={index}
+                style={{
+                  paddingBottom: 10,
+                  paddingTop: 10,
+                  fontSize: 16,
+                  display: 'inline-block'
+                }}>{index + 1}) {item}</CardText>)
           }
-          <div id='jxgbox' className='jxgbox' style={canvasStyle} />
           {
             this.state.task.tests.map(({question , test, correct}, index) => (
               <div key={index}>
-                <CardText key={index} style={!Array.isArray(test) ? {marginBottom: -10} : {}}>
+                <CardText
+                  key={index}
+                  style={!Array.isArray(test) ? {marginBottom: -10, fontSize: 16} : {fontSize: 16}}>
                   {index + 1}) {question} {Array.isArray(correct) && '(Координати ввести через пробіл)'}
-                  {Number.isInteger(this.state.mark) && this.showIcon(index)}
+                  {
+                    Number.isInteger(this.state.mark)
+                    ? this.showIcon(index)
+                    : <span style={{height: 24, width: 24, opacity: 0, position: 'relative', display: 'inline-block', top: 5}} />
+                  }
                 </CardText>
                 {
                   Array.isArray(test) && (
@@ -121,7 +147,7 @@ export default React.createClass({
                       key={question}
                       valueSelected={this.state.answers[index]}
                       onChange={(event, value) => this.handleCheck(index, value)}
-                      style={{paddingLeft: 16}}>
+                      style={{paddingLeft: 16, width: 200}}>
                       {test.map((item, i) =>
                         <RadioButton
                           style={{
