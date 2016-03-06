@@ -39,8 +39,9 @@ export default React.createClass({
           open={this.state.open}
           onRequestChange={open => this.setState({open})}
         >
-          <MenuItem onTouchTap={() => this.navigate()}>Тест</MenuItem>
-          <MenuItem onTouchTap={() => this.navigate('generate')}>Генератор тестів</MenuItem>
+          <MenuItem onTouchTap={() => this.navigate()}>Генератор тестів</MenuItem>
+          <MenuItem onTouchTap={() => this.navigate('test_1')}>Тест 1</MenuItem>
+          <MenuItem onTouchTap={() => this.navigate('test_2')}>Тест 2</MenuItem>
         </LeftNav>
       </div>
     )

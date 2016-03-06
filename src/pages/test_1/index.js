@@ -13,7 +13,6 @@ import DoneIcon from 'material-ui/lib/svg-icons/action/check-circle'
 import ErrorIcon from 'material-ui/lib/svg-icons/action/highlight-off'
 import Test from '../../service/test'
 
-const testKey = ['a', 'b', 'c', 'd']
 
 export default React.createClass({
   getInitialState() {
@@ -23,8 +22,8 @@ export default React.createClass({
   getState() {
     return {
       task: new Test(),
-      answers: ['', '', null, null, ''],
-      correct: [false, false, false, false, false],
+      answers: ['', ''],
+      correct: [false, false],
       mark: null
     }
   },
@@ -112,7 +111,7 @@ export default React.createClass({
             <div id='jxgbox' className='jxgbox' style={canvasStyle} />
           </div>
           <CardHeader
-            title='Тест'
+            title='Тест №1'
             titleStyle={{fontSize: '30px'}}
             style={{padding: 0, height: 50, marginLeft: 17}} />
           <CardText style={{fontSize: 16}}>z {system.func.type} = {input.objective}</CardText>
@@ -128,41 +127,20 @@ export default React.createClass({
                 }}>{index + 1}) {item}</CardText>)
           }
           {
-            this.state.task.tests.map(({question , test, correct}, index) => (
-              <div key={index}>
-                <CardText
-                  key={index}
-                  style={!Array.isArray(test) ? {marginBottom: -10, fontSize: 16} : {fontSize: 16}}>
-                  {index + 1}) {question} {Array.isArray(correct) && '(Координати ввести через пробіл)'}
-                  {
-                    Number.isInteger(this.state.mark)
-                    ? this.showIcon(index)
-                    : <span style={{height: 24, width: 24, opacity: 0, position: 'relative', display: 'inline-block', top: 5}} />
-                  }
-                </CardText>
-                {
-                  Array.isArray(test) && (
-                    <RadioButtonGroup
-                      name={question}
-                      key={question}
-                      valueSelected={this.state.answers[index]}
-                      onChange={(event, value) => this.handleCheck(index, value)}
-                      style={{paddingLeft: 16, width: 200}}>
-                      {test.map((item, i) =>
-                        <RadioButton
-                          style={{
-                            block: {maxWidth: 250},
-                            radioButton: {marginBottom: 16}
-                          }}
-                          key={`${index} ${i}`}
-                          value={testKey[i]}
-                          label={<span>{testKey[i]}) {item.toString()}</span>}/>)
-                      }
-                    </RadioButtonGroup>
-                  )
-                }
-                {
-                  !Array.isArray(test) &&
+            this.state.task.tests
+              .filter((x, index) => index < 2)
+              .map(({question , test, correct}, index) => (
+                <div key={index}>
+                  <CardText
+                    key={index}
+                    style={!Array.isArray(test) ? {marginBottom: -10, fontSize: 16} : {fontSize: 16}}>
+                    {index + 1}) {question} {Array.isArray(correct) && '(Координати ввести через пробіл)'}
+                    {
+                      Number.isInteger(this.state.mark)
+                      ? this.showIcon(index)
+                      : <span style={{height: 24, width: 24, opacity: 0, position: 'relative', display: 'inline-block', top: 5}} />
+                    }
+                  </CardText>
                   <TextField
                     hintText='Відповідь'
                     inputStyle={{marginLeft: 5, width: 150}}
@@ -170,9 +148,8 @@ export default React.createClass({
                     hintStyle={{marginLeft: 5}}
                     value={this.state.answers[index]}
                     onChange={event => this.handleCheck(index, event.target.value)} />
-                }
-              </div>
-            ))
+                </div>
+              ))
           }
           <FlatButton
             secondary

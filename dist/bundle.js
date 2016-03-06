@@ -70,9 +70,13 @@
 	
 	var _pagesGenerate2 = _interopRequireDefault(_pagesGenerate);
 	
-	var _pagesTest = __webpack_require__(425);
+	var _pagesTest_1 = __webpack_require__(425);
 	
-	var _pagesTest2 = _interopRequireDefault(_pagesTest);
+	var _pagesTest_12 = _interopRequireDefault(_pagesTest_1);
+	
+	var _pagesTest_2 = __webpack_require__(447);
+	
+	var _pagesTest_22 = _interopRequireDefault(_pagesTest_2);
 	
 	(0, _reactTapEventPlugin2['default'])();
 	
@@ -82,8 +86,9 @@
 	  _react2['default'].createElement(
 	    _reactRouter.Route,
 	    { path: '/', component: _pagesApp2['default'] },
-	    _react2['default'].createElement(_reactRouter.Route, { path: '/generate', component: _pagesGenerate2['default'] }),
-	    _react2['default'].createElement(_reactRouter.IndexRoute, { component: _pagesTest2['default'] })
+	    _react2['default'].createElement(_reactRouter.Route, { path: '/test_1', component: _pagesTest_12['default'] }),
+	    _react2['default'].createElement(_reactRouter.Route, { path: '/test_2', component: _pagesTest_22['default'] }),
+	    _react2['default'].createElement(_reactRouter.IndexRoute, { component: _pagesGenerate2['default'] })
 	  )
 	);
 	
@@ -25123,14 +25128,21 @@
 	          { onTouchTap: function () {
 	              return _this.navigate();
 	            } },
-	          'Тест'
+	          'Генератор тестів'
 	        ),
 	        _react2['default'].createElement(
 	          _materialUiLibMenusMenuItem2['default'],
 	          { onTouchTap: function () {
-	              return _this.navigate('generate');
+	              return _this.navigate('test_1');
 	            } },
-	          'Генератор тестів'
+	          'Тест 1'
+	        ),
+	        _react2['default'].createElement(
+	          _materialUiLibMenusMenuItem2['default'],
+	          { onTouchTap: function () {
+	              return _this.navigate('test_2');
+	            } },
+	          'Тест 2'
 	        )
 	      )
 	    );
@@ -46413,8 +46425,6 @@
 	
 	var _serviceTest2 = _interopRequireDefault(_serviceTest);
 	
-	var testKey = ['a', 'b', 'c', 'd'];
-	
 	exports['default'] = _react2['default'].createClass({
 	  displayName: 'index',
 	
@@ -46425,8 +46435,8 @@
 	  getState: function getState() {
 	    return {
 	      task: new _serviceTest2['default'](),
-	      answers: ['', '', null, null, ''],
-	      correct: [false, false, false, false, false],
+	      answers: ['', ''],
+	      correct: [false, false],
 	      mark: null
 	    };
 	  },
@@ -46525,7 +46535,7 @@
 	          _react2['default'].createElement('div', { id: 'jxgbox', className: 'jxgbox', style: canvasStyle })
 	        ),
 	        _react2['default'].createElement(_materialUiLibCardCardHeader2['default'], {
-	          title: 'Тест',
+	          title: 'Тест №1',
 	          titleStyle: { fontSize: '30px' },
 	          style: { padding: 0, height: 50, marginLeft: 17 } }),
 	        _react2['default'].createElement(
@@ -46552,7 +46562,9 @@
 	            item
 	          );
 	        }),
-	        this.state.task.tests.map(function (_ref2, index) {
+	        this.state.task.tests.filter(function (x, index) {
+	          return index < 2;
+	        }).map(function (_ref2, index) {
 	          var question = _ref2.question;
 	          var test = _ref2.test;
 	          var correct = _ref2.correct;
@@ -46571,34 +46583,7 @@
 	              Array.isArray(correct) && '(Координати ввести через пробіл)',
 	              _Number$isInteger(_this2.state.mark) ? _this2.showIcon(index) : _react2['default'].createElement('span', { style: { height: 24, width: 24, opacity: 0, position: 'relative', display: 'inline-block', top: 5 } })
 	            ),
-	            Array.isArray(test) && _react2['default'].createElement(
-	              _materialUiLibRadioButtonGroup2['default'],
-	              {
-	                name: question,
-	                key: question,
-	                valueSelected: _this2.state.answers[index],
-	                onChange: function (event, value) {
-	                  return _this2.handleCheck(index, value);
-	                },
-	                style: { paddingLeft: 16, width: 200 } },
-	              test.map(function (item, i) {
-	                return _react2['default'].createElement(_materialUiLibRadioButton2['default'], {
-	                  style: {
-	                    block: { maxWidth: 250 },
-	                    radioButton: { marginBottom: 16 }
-	                  },
-	                  key: index + ' ' + i,
-	                  value: testKey[i],
-	                  label: _react2['default'].createElement(
-	                    'span',
-	                    null,
-	                    testKey[i],
-	                    ') ',
-	                    item.toString()
-	                  ) });
-	              })
-	            ),
-	            !Array.isArray(test) && _react2['default'].createElement(_materialUiLibTextFieldTextField2['default'], {
+	            _react2['default'].createElement(_materialUiLibTextFieldTextField2['default'], {
 	              hintText: 'Відповідь',
 	              inputStyle: { marginLeft: 5, width: 150 },
 	              style: { marginLeft: 16 },
@@ -47659,6 +47644,287 @@
 	    }({}, false) : undefined),
 	  check: check
 	};
+
+/***/ },
+/* 447 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* REACT HOT LOADER */ if (false) { (function () { var ReactHotAPI = require("/Users/Gregory/work/task_generator/node_modules/react-hot-loader/node_modules/react-hot-api/modules/index.js"), RootInstanceProvider = require("/Users/Gregory/work/task_generator/node_modules/react-hot-loader/RootInstanceProvider.js"), ReactMount = require("react/lib/ReactMount"), React = require("react"); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+	
+	'use strict';
+	
+	var _Number$isInteger = __webpack_require__(393)['default'];
+	
+	var _interopRequireDefault = __webpack_require__(1)['default'];
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _materialUiLibFlatButton = __webpack_require__(333);
+	
+	var _materialUiLibFlatButton2 = _interopRequireDefault(_materialUiLibFlatButton);
+	
+	var _materialUiLibCardCard = __webpack_require__(335);
+	
+	var _materialUiLibCardCard2 = _interopRequireDefault(_materialUiLibCardCard);
+	
+	var _materialUiLibCardCardHeader = __webpack_require__(339);
+	
+	var _materialUiLibCardCardHeader2 = _interopRequireDefault(_materialUiLibCardCardHeader);
+	
+	var _materialUiLibCardCardText = __webpack_require__(426);
+	
+	var _materialUiLibCardCardText2 = _interopRequireDefault(_materialUiLibCardCardText);
+	
+	var _materialUiLibCardCardTitle = __webpack_require__(427);
+	
+	var _materialUiLibCardCardTitle2 = _interopRequireDefault(_materialUiLibCardCardTitle);
+	
+	var _materialUiLibRaisedButton = __webpack_require__(331);
+	
+	var _materialUiLibRaisedButton2 = _interopRequireDefault(_materialUiLibRaisedButton);
+	
+	var _materialUiLibTextFieldTextField = __webpack_require__(345);
+	
+	var _materialUiLibTextFieldTextField2 = _interopRequireDefault(_materialUiLibTextFieldTextField);
+	
+	var _materialUiLibRadioButton = __webpack_require__(428);
+	
+	var _materialUiLibRadioButton2 = _interopRequireDefault(_materialUiLibRadioButton);
+	
+	var _materialUiLibStylesColors = __webpack_require__(243);
+	
+	var _materialUiLibStylesColors2 = _interopRequireDefault(_materialUiLibStylesColors);
+	
+	var _materialUiLibRadioButtonGroup = __webpack_require__(431);
+	
+	var _materialUiLibRadioButtonGroup2 = _interopRequireDefault(_materialUiLibRadioButtonGroup);
+	
+	var _materialUiLibSvgIconsActionCheckCircle = __webpack_require__(432);
+	
+	var _materialUiLibSvgIconsActionCheckCircle2 = _interopRequireDefault(_materialUiLibSvgIconsActionCheckCircle);
+	
+	var _materialUiLibSvgIconsActionHighlightOff = __webpack_require__(433);
+	
+	var _materialUiLibSvgIconsActionHighlightOff2 = _interopRequireDefault(_materialUiLibSvgIconsActionHighlightOff);
+	
+	var _serviceTest = __webpack_require__(434);
+	
+	var _serviceTest2 = _interopRequireDefault(_serviceTest);
+	
+	var testKey = ['a', 'b', 'c', 'd'];
+	
+	exports['default'] = _react2['default'].createClass({
+	  displayName: 'index',
+	
+	  getInitialState: function getInitialState() {
+	    return this.getState();
+	  },
+	
+	  getState: function getState() {
+	    return {
+	      task: new _serviceTest2['default'](),
+	      answers: [null, null, ''],
+	      correct: [false, false, false],
+	      mark: null
+	    };
+	  },
+	
+	  newTest: function newTest() {
+	    var state = this.getState();
+	    this.setState(state);
+	    state.task.draw();
+	  },
+	
+	  handleCheck: function handleCheck(index, value) {
+	    this.setState(function (_ref) {
+	      var answers = _ref.answers;
+	
+	      answers[index] = value;
+	      return { answers: answers };
+	    });
+	  },
+	
+	  handleClick: function handleClick() {
+	    var _this = this;
+	
+	    var _state$answers$reduce = this.state.answers.reduce(function (memo, answer, index) {
+	      var correctAnswer = Array.isArray(_this.state.task.tests[index + 2].correct) ? _this.state.task.tests[index + 2].correct.join(' ') : _this.state.task.tests[index + 2].correctKey || _this.state.task.tests[index + 2].correct.toString();
+	      var check = correctAnswer == answer;
+	      memo.correct.push(check);
+	      memo.mark += check ? 1 : 0;
+	      return memo;
+	    }, { correct: [], mark: 0 });
+	
+	    var mark = _state$answers$reduce.mark;
+	    var correct = _state$answers$reduce.correct;
+	
+	    this.setState({ mark: mark, correct: correct });
+	  },
+	
+	  componentDidMount: function componentDidMount() {
+	    this.state.task.draw();
+	  },
+	
+	  showIcon: function showIcon(index) {
+	    var style = {
+	      top: 5,
+	      position: 'relative',
+	      marginLeft: 3
+	    };
+	    return this.state.correct[index] ? _react2['default'].createElement(_materialUiLibSvgIconsActionCheckCircle2['default'], { style: style, color: _materialUiLibStylesColors2['default'].green500 }) : _react2['default'].createElement(_materialUiLibSvgIconsActionHighlightOff2['default'], { style: style, color: _materialUiLibStylesColors2['default'].red500 });
+	  },
+	
+	  render: function render() {
+	    var _this2 = this;
+	
+	    var canvasStyle = {
+	      width: 550,
+	      height: 550,
+	      border: 'none',
+	      margin: '50px 0'
+	    };
+	    var system = this.state.task.system.system;
+	
+	    var input = system.input;
+	    return _react2['default'].createElement(
+	      'div',
+	      null,
+	      _react2['default'].createElement(
+	        _materialUiLibCardCard2['default'],
+	        { initiallyExpanded: true, style: {
+	            padding: '30px 40px 30px 40px',
+	            width: 1150,
+	            margin: '80px auto'
+	          } },
+	        _react2['default'].createElement(
+	          'div',
+	          { style: {
+	              float: 'right',
+	              zIndex: 100,
+	              position: 'relative',
+	              width: 550
+	            } },
+	          _react2['default'].createElement(_materialUiLibCardCardTitle2['default'], {
+	            title: _react2['default'].createElement(
+	              'span',
+	              { style: {
+	                  opacity: _Number$isInteger(this.state.mark) ? 1 : 0,
+	                  marginLeft: 32
+	                } },
+	              'Оцінка ',
+	              this.state.mark
+	            ),
+	            style: { paddingLeft: 0 } }),
+	          _react2['default'].createElement(_materialUiLibRaisedButton2['default'], {
+	            label: 'Змінити умову',
+	            secondary: true,
+	            onClick: this.newTest,
+	            style: { marginLeft: 32 } }),
+	          _react2['default'].createElement('div', { id: 'jxgbox', className: 'jxgbox', style: canvasStyle })
+	        ),
+	        _react2['default'].createElement(_materialUiLibCardCardHeader2['default'], {
+	          title: 'Тест №2',
+	          titleStyle: { fontSize: '30px' },
+	          style: { padding: 0, height: 50, marginLeft: 17 } }),
+	        _react2['default'].createElement(
+	          _materialUiLibCardCardText2['default'],
+	          { style: { fontSize: 16 } },
+	          'z ',
+	          system.func.type,
+	          ' = ',
+	          input.objective
+	        ),
+	        input.constraints.map(function (item, index) {
+	          return _react2['default'].createElement(
+	            _materialUiLibCardCardText2['default'],
+	            {
+	              key: index,
+	              style: {
+	                paddingBottom: 10,
+	                paddingTop: 10,
+	                fontSize: 16,
+	                display: 'inline-block'
+	              } },
+	            index + 1,
+	            ') ',
+	            item
+	          );
+	        }),
+	        this.state.task.tests.filter(function (x, index) {
+	          return index > 1;
+	        }).map(function (_ref2, index) {
+	          var question = _ref2.question;
+	          var test = _ref2.test;
+	          var correct = _ref2.correct;
+	          return _react2['default'].createElement(
+	            'div',
+	            { key: index },
+	            _react2['default'].createElement(
+	              _materialUiLibCardCardText2['default'],
+	              {
+	                key: index,
+	                style: !Array.isArray(test) ? { marginBottom: -10, fontSize: 16 } : { fontSize: 16 } },
+	              index + 1,
+	              ') ',
+	              question,
+	              _Number$isInteger(_this2.state.mark) ? _this2.showIcon(index) : _react2['default'].createElement('span', { style: { height: 24, width: 24, opacity: 0, position: 'relative', display: 'inline-block', top: 5 } })
+	            ),
+	            Array.isArray(test) && _react2['default'].createElement(
+	              _materialUiLibRadioButtonGroup2['default'],
+	              {
+	                name: question,
+	                key: question,
+	                valueSelected: _this2.state.answers[index],
+	                onChange: function (event, value) {
+	                  return _this2.handleCheck(index, value);
+	                },
+	                style: { paddingLeft: 16, width: 200 } },
+	              test.map(function (item, i) {
+	                return _react2['default'].createElement(_materialUiLibRadioButton2['default'], {
+	                  style: {
+	                    block: { maxWidth: 250 },
+	                    radioButton: { marginBottom: 16 }
+	                  },
+	                  key: index + ' ' + i,
+	                  value: testKey[i],
+	                  label: _react2['default'].createElement(
+	                    'span',
+	                    null,
+	                    testKey[i],
+	                    ') ',
+	                    item.toString()
+	                  ) });
+	              })
+	            ),
+	            !Array.isArray(test) && _react2['default'].createElement(_materialUiLibTextFieldTextField2['default'], {
+	              hintText: 'Відповідь',
+	              inputStyle: { marginLeft: 5, width: 150 },
+	              style: { marginLeft: 16 },
+	              hintStyle: { marginLeft: 5 },
+	              value: _this2.state.answers[index],
+	              onChange: function (event) {
+	                return _this2.handleCheck(index, event.target.value);
+	              } })
+	          );
+	        }),
+	        _react2['default'].createElement(_materialUiLibFlatButton2['default'], {
+	          secondary: true,
+	          label: 'submit',
+	          style: { width: '100%', marginTop: '15px' },
+	          onClick: this.handleClick })
+	      )
+	    );
+	  }
+	});
+	module.exports = exports['default'];
+
+	/* REACT HOT LOADER */ }).call(this); } finally { if (false) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = require("/Users/Gregory/work/task_generator/node_modules/react-hot-loader/makeExportsHot.js"); if (makeExportsHot(module, require("react"))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "index.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
 
 /***/ }
 /******/ ]);
