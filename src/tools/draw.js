@@ -1,6 +1,6 @@
 let checkCord = (x, y, arr) => arr.some(([a, b]) => x == a && y == b)
 
-export default system => {
+export default (system, poligon) => {
   const labelSize = {label: {fontSize: 18}}
   let {constraints, func} = system
   let input = system.input
@@ -15,6 +15,7 @@ export default system => {
   let name = 0
   let graph = []
   let cords = []
+  let points = []
   board.create('axis', [[0, 0], [1, 0]], {
     name: 'x1',
     withLabel: true,
@@ -46,6 +47,7 @@ export default system => {
     graph.forEach((l2, j) => {
       if (i >= j) return
       let point = board.create('intersection', [l1, l2, 0], labelSize)
+      points.push(point)
       checkPoint(point)
     })
   })
@@ -55,15 +57,36 @@ export default system => {
     point = board.create('point', [b / constraints.a[index][0], 0], labelSize)
     checkPoint(point)
   })
+
+
+  if (poligon) {
+    let allPoints = [...points].filter(point => !isNaN(point.X()) && !isNaN(point.Y()))
+    let checkPoints = allPoints
+      .filter((point, i) => !allPoints.some((p, j) => j < i && p.X() == point.X() && p.Y() == point.Y()))
+      .filter(point=> checkInRange(system.constraints, point.X(), point.Y()))
+    let polygonPoints = [p1, ...checkPoints].sort((a, b) => {
+      return a.X() > b.X()
+    })
+    console.log(polygonPoints.map(point => [point.X(), point.Y()]))
+    let poly = board.createElement('polygon', polygonPoints, {appendChildPrim: -1})
+  }
+
   board.clickUpArrow()
   board.clickDownArrow()
- function checkPoint(point) {
-   let x = point.X()
-   let y = point.Y()
-   let isCord = checkCord(x, y, cords)
-   if (!isCord) cords.push([x, y])
-   if (isCord || isNaN(y) || isNaN(x) || y > 7.9 || y < 0 || x > 7.9 || x < 0) {
-     point.setAttribute({visible: false, name: (++name).toString(), label: labelSize.label})
-   }
- }
+
+  function checkInRange ({a, b}, x, y) {
+    return a.every(([i, j], index) => i * x + y * j <= b[index]) && x >= 0 && y >= 0
+  }
+  function checkPoint(point) {
+    let x = point.X()
+    let y = point.Y()
+    let isCord = checkCord(x, y, cords)
+    if (!isCord) {
+      cords.push([x, y])
+      points.push(point)
+    }
+    if (isCord || isNaN(y) || isNaN(x) || y > 7.9 || y < 0 || x > 7.9 || x < 0) {
+      point.setAttribute({visible: false, name: (++name).toString(), label: labelSize.label})
+    }
+  }
 }

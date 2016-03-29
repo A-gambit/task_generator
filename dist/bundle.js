@@ -42736,8 +42736,8 @@
 	    }
 	  }, {
 	    key: 'draw',
-	    value: function draw(system) {
-	      (0, _toolsDraw2['default'])(system);
+	    value: function draw(system, polygon) {
+	      (0, _toolsDraw2['default'])(system, polygon);
 	      var canvas = document.querySelector('#jxgbox > canvas');
 	      return canvas.toDataURL();
 	    }
@@ -46083,6 +46083,8 @@
 	
 	var _slicedToArray = __webpack_require__(412)['default'];
 	
+	var _toConsumableArray = __webpack_require__(356)['default'];
+	
 	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
@@ -46096,7 +46098,7 @@
 	  });
 	};
 	
-	exports['default'] = function (system) {
+	exports['default'] = function (system, poligon) {
 	  var labelSize = { label: { fontSize: 18 } };
 	  var constraints = system.constraints;
 	  var func = system.func;
@@ -46113,6 +46115,7 @@
 	  var name = 0;
 	  var graph = [];
 	  var cords = [];
+	  var points = [];
 	  board.create('axis', [[0, 0], [1, 0]], {
 	    name: 'x1',
 	    withLabel: true,
@@ -46141,6 +46144,7 @@
 	    graph.forEach(function (l2, j) {
 	      if (i >= j) return;
 	      var point = board.create('intersection', [l1, l2, 0], labelSize);
+	      points.push(point);
 	      checkPoint(point);
 	    });
 	  });
@@ -46150,13 +46154,52 @@
 	    point = board.create('point', [b / constraints.a[index][0], 0], labelSize);
 	    checkPoint(point);
 	  });
+	
+	  if (poligon) {
+	    (function () {
+	      var allPoints = [].concat(points).filter(function (point) {
+	        return !isNaN(point.X()) && !isNaN(point.Y());
+	      });
+	      var checkPoints = allPoints.filter(function (point, i) {
+	        return !allPoints.some(function (p, j) {
+	          return j < i && p.X() == point.X() && p.Y() == point.Y();
+	        });
+	      }).filter(function (point) {
+	        return checkInRange(system.constraints, point.X(), point.Y());
+	      });
+	      var polygonPoints = [p1].concat(_toConsumableArray(checkPoints)).sort(function (a, b) {
+	        return a.X() > b.X();
+	      });
+	      console.log(polygonPoints.map(function (point) {
+	        return [point.X(), point.Y()];
+	      }));
+	      var poly = board.createElement('polygon', polygonPoints, { appendChildPrim: -1 });
+	    })();
+	  }
+	
 	  board.clickUpArrow();
 	  board.clickDownArrow();
+	
+	  function checkInRange(_ref3, x, y) {
+	    var a = _ref3.a;
+	    var b = _ref3.b;
+	
+	    return a.every(function (_ref4, index) {
+	      var _ref42 = _slicedToArray(_ref4, 2);
+	
+	      var i = _ref42[0];
+	      var j = _ref42[1];
+	      return i * x + y * j <= b[index];
+	    }) && x >= 0 && y >= 0;
+	  }
 	  function checkPoint(point) {
 	    var x = point.X();
 	    var y = point.Y();
 	    var isCord = checkCord(x, y, cords);
-	    if (!isCord) cords.push([x, y]);
+	    if (!isCord) {
+	      cords.push([x, y]);
+	      points.push(point);
+	    }
 	    if (isCord || isNaN(y) || isNaN(x) || y > 7.9 || y < 0 || x > 7.9 || x < 0) {
 	      point.setAttribute({ visible: false, name: (++name).toString(), label: labelSize.label });
 	    }
@@ -47435,9 +47478,12 @@
 	  _inherits(Test, _Generation);
 	
 	  function Test() {
+	    var polygon = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
+	
 	    _classCallCheck(this, Test);
 	
 	    _get(Object.getPrototypeOf(Test.prototype), 'constructor', this).call(this);
+	    this.polygon = polygon;
 	    this.system = _get(Object.getPrototypeOf(Test.prototype), 'generateOne', this).call(this);
 	    this.tests = _get(Object.getPrototypeOf(Test.prototype), 'generationTest', this).call(this, this.system);
 	  }
@@ -47445,7 +47491,7 @@
 	  _createClass(Test, [{
 	    key: 'draw',
 	    value: function draw() {
-	      _get(Object.getPrototypeOf(Test.prototype), 'draw', this).call(this, this.system.system);
+	      _get(Object.getPrototypeOf(Test.prototype), 'draw', this).call(this, this.system.system, this.polygon);
 	    }
 	  }]);
 	
@@ -47728,7 +47774,7 @@
 	
 	  getState: function getState() {
 	    return {
-	      task: new _serviceTest2['default'](),
+	      task: new _serviceTest2['default'](true),
 	      answers: [null, null, ''],
 	      correct: [false, false, false],
 	      mark: null

@@ -1,14 +1,15 @@
 import Generation from './generation'
 
 class Test extends Generation {
-  constructor() {
+  constructor(polygon = false) {
     super()
+    this.polygon = polygon
     this.system = super.generateOne()
     this.tests = super.generationTest(this.system)
   }
 
   draw() {
-    super.draw(this.system.system)
+    super.draw(this.system.system, this.polygon)
   }
 }
 

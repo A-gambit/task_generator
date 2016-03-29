@@ -22,7 +22,7 @@ export default React.createClass({
 
   getState() {
     return {
-      task: new Test(),
+      task: new Test(true),
       answers: [null, null, ''],
       correct: [false, false, false],
       mark: null

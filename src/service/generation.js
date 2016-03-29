@@ -99,8 +99,8 @@ class Generation {
     return questions
   }
 
-  draw(system) {
-    draw(system)
+  draw(system, polygon) {
+    draw(system, polygon)
     let canvas = document.querySelector('#jxgbox > canvas')
     return canvas.toDataURL()
   }
