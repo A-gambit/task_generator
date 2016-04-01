@@ -1,6 +1,6 @@
 export let random = (max = 10) => Math.floor(Math.random() * max)
 
-export let randomWhole = (item, max = 10, notNull) => {
+export let randomWhole = (item, max = 9, notNull) => {
   let i = null
   do {
     i = notNull ? randomMore(0, max) : random(max)
@@ -8,7 +8,7 @@ export let randomWhole = (item, max = 10, notNull) => {
   return i
 }
 
-export let randomMore = (more = 0, max = 10) => {
+export let randomMore = (more = 0, max = 9) => {
   while (true) {
     let res = random(max)
     if (res > more) return res

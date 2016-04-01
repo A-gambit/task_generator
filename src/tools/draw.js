@@ -7,7 +7,7 @@ export default (system, poligon) => {
   JXG.Options.renderer = 'canvas'
   JXG.Options.text.display = 'internal'
   const board = JXG.JSXGraph.initBoard('jxgbox', {
-    boundingbox: [-0.5, 8, 8, -0.5],
+    boundingbox: [-0.5, 9.5, 9.5, -0.5],
     axis: false,
     showNavigation: false,
     showCopyright: false
@@ -19,12 +19,12 @@ export default (system, poligon) => {
   board.create('axis', [[0, 0], [1, 0]], {
     name: 'x1',
     withLabel: true,
-    label: {offset: [283, 15], fontSize: labelSize.label.fontSize}
+    label: {offset: [255, 15], fontSize: labelSize.label.fontSize}
   })
   board.create('axis', [[0, 0], [0, 1]], {
     name: 'x2',
     withLabel: true,
-    label: {offset: [15, 290], fontSize: labelSize.label.fontSize}
+    label: {offset: [15, 263], fontSize: labelSize.label.fontSize}
   })
   constraints.b.forEach((b, index) => {
     let line = board.create('functiongraph',
@@ -63,11 +63,10 @@ export default (system, poligon) => {
     let allPoints = [...points].filter(point => !isNaN(point.X()) && !isNaN(point.Y()))
     let checkPoints = allPoints
       .filter((point, i) => !allPoints.some((p, j) => j < i && p.X() == point.X() && p.Y() == point.Y()))
-      .filter(point=> checkInRange(system.constraints, point.X(), point.Y()))
+      .filter(point => checkInRange(system.constraints, point.X(), point.Y()))
     let polygonPoints = [p1, ...checkPoints].sort((a, b) => {
       return a.X() > b.X()
     })
-    console.log(polygonPoints.map(point => [point.X(), point.Y()]))
     let poly = board.createElement('polygon', polygonPoints, {appendChildPrim: -1})
   }
 
@@ -85,7 +84,7 @@ export default (system, poligon) => {
       cords.push([x, y])
       points.push(point)
     }
-    if (isCord || isNaN(y) || isNaN(x) || y > 7.9 || y < 0 || x > 7.9 || x < 0) {
+    if (isCord || isNaN(y) || isNaN(x) || y > 9.9 || y < 0 || x > 9.9 || x < 0) {
       point.setAttribute({visible: false, name: (++name).toString(), label: labelSize.label})
     }
   }
